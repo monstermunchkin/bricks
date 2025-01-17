@@ -9,11 +9,10 @@ import (
 	"strings"
 	"time"
 
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-middleware/providers/prometheus"
-	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
-	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware/v2"
+	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/auth"
+	grpc_logging "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"github.com/pace/bricks/http/middleware"
 	"github.com/pace/bricks/http/security"
 	"github.com/pace/bricks/locale"
@@ -68,13 +67,12 @@ func Listener() (net.Listener, error) {
 	return tcpListener, nil
 }
 
-func Server(ab AuthBackend) *grpc.Server {
+func Server(ab AuthBackend, logger grpc_logging.Logger) *grpc.Server {
 	serverMetrics := grpc_prometheus.NewServerMetrics()
 
 	myServer := grpc.NewServer(
-		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
-			grpc_ctxtags.StreamServerInterceptor(),
-			grpc_opentracing.StreamServerInterceptor(),
+		grpc.ChainStreamInterceptor(
+			grpc_logging.StreamServerInterceptor(logger),
 			serverMetrics.StreamServerInterceptor(),
 			func(srv interface{}, stream grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
 				ctx := stream.Context()
@@ -107,10 +105,9 @@ func Server(ab AuthBackend) *grpc.Server {
 				return err
 			},
 			grpc_auth.StreamServerInterceptor(ab.AuthorizeStream),
-		)),
-		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
-			grpc_ctxtags.UnaryServerInterceptor(),
-			grpc_opentracing.UnaryServerInterceptor(),
+		),
+		grpc.ChainUnaryInterceptor(
+			grpc_logging.UnaryServerInterceptor(logger),
 			serverMetrics.UnaryServerInterceptor(),
 			func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 				ctx, md := prepareContext(ctx)
@@ -140,7 +137,7 @@ func Server(ab AuthBackend) *grpc.Server {
 				return
 			},
 			grpc_auth.UnaryServerInterceptor(ab.AuthorizeUnary),
-		)),
+		),
 	)
 
 	return myServer
