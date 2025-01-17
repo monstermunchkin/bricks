@@ -13,7 +13,7 @@ require (
 	github.com/certifi/gocertifi v0.0.0-20210507211836-431795d63e8d
 	github.com/dave/jennifer v1.4.1
 	github.com/getkin/kin-openapi v0.128.0
-	github.com/getsentry/sentry-go v0.29.0
+	github.com/getsentry/sentry-go v0.31.1
 	github.com/go-kivik/couchdb/v3 v3.2.6
 	github.com/go-kivik/kivik/v3 v3.2.3
 	github.com/go-pg/pg v6.14.5+incompatible
