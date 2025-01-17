@@ -14,8 +14,8 @@ require (
 	github.com/dave/jennifer v1.4.1
 	github.com/getkin/kin-openapi v0.128.0
 	github.com/getsentry/sentry-go v0.31.1
-	github.com/go-kivik/couchdb/v3 v3.2.6
-	github.com/go-kivik/kivik/v3 v3.2.3
+	github.com/go-kivik/couchdb/v3 v3.4.1
+	github.com/go-kivik/kivik/v3 v3.2.4
 	github.com/go-pg/pg v6.14.5+incompatible
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/google/uuid v1.6.0
