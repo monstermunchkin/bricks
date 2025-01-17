@@ -34,7 +34,7 @@ require (
 	github.com/shopspring/decimal v1.4.0
 	github.com/sony/gobreaker/v2 v2.1.0
 	github.com/spf13/cobra v1.8.1
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	github.com/zenazn/goji v1.0.1
 	golang.org/x/text v0.21.0
 	google.golang.org/grpc v1.67.1
