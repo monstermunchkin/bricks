@@ -18,7 +18,7 @@ import (
 
 	"github.com/rs/zerolog"
 
-	"github.com/caarlos0/env/v10"
+	"github.com/caarlos0/env/v11"
 	"github.com/go-pg/pg"
 	"github.com/prometheus/client_golang/prometheus"
 

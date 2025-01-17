@@ -5,7 +5,7 @@ package couchdb
 import (
 	"context"
 
-	"github.com/caarlos0/env/v10"
+	"github.com/caarlos0/env/v11"
 	"github.com/go-kivik/couchdb/v3"
 	kivik "github.com/go-kivik/kivik/v3"
 
