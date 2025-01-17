@@ -30,7 +30,7 @@ require (
 	github.com/prometheus/client_golang v1.20.5
 	github.com/redis/go-redis/v9 v9.7.0
 	github.com/rs/xid v1.6.0
-	github.com/rs/zerolog v1.32.0
+	github.com/rs/zerolog v1.33.0
 	github.com/shopspring/decimal v1.3.1
 	github.com/sony/gobreaker v0.5.0
 	github.com/spf13/cobra v1.8.1
